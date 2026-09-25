@@ -8,6 +8,8 @@
 [![Animation](https://img.shields.io/badge/Animation-GSAP-green)](https://greensock.com/gsap/)
 [![Audio Sync](https://img.shields.io/badge/Audio%20Sync-Whisper%20Word--Level-purple)](https://github.com/openai/whisper)
 
+> 📖 **[点击查看 5 大商业视频案例实录与截图分析文档 →](./docs/case_study.md)**
+
 ---
 
 ## 💡 The Core Philosophy: "Videos are Code, Not Edited Footage"

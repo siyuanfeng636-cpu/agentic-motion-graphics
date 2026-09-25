@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Syntax check on Python scripts
+      run: |
+        python3 -m py_compile scripts/*.py
+
+    - name: Validate JSON files
+      run: |
+        python3 -c "
+        import json, glob
+        for f in glob.glob('**/*.json', recursive=True):
+            if 'node_modules' in f: continue
+            json.load(open(f))
+            print(f'[✓] Valid JSON: {f}')
+        "
