@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agentic Motion Graphics Canvas</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- GSAP Core -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+</head>
+<body>
+  <div id="canvas-container">
+    <!-- Scene 1: Hook -->
+    <div class="scene" id="scene-1">
+      <div class="pill-badge" id="badge">⚡️ NEXT GEN AI</div>
+      <h1 class="headline" id="title">
+        <span class="word" data-word="Build">Build</span>
+        <span class="word" data-word="Faster">Faster</span>
+        <span class="word" data-word="With">With</span>
+        <span class="word" data-word="Agents">Agents</span>
+      </h1>
+      <div class="card" id="hero-card">
+        <div class="card-inner">
+          <div class="indicator"></div>
+          <p>Deterministic Code-to-Video Engine</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Initialize master timeline, kept paused for HyperFrames frame-by-frame scrubbing
+    const masterTimeline = gsap.timeline({ paused: true });
+
+    async function setupAnimation() {
+      try {
+        const response = await fetch('./data/timing.json');
+        const timing = await response.json();
+
+        // 1. Entrance animation
+        masterTimeline.to('#scene-1', { opacity: 1, duration: 0.2 }, 0);
+        masterTimeline.from('#badge', { y: -20, opacity: 0, duration: 0.4, ease: "back.out(1.7)" }, 0.1);
+        masterTimeline.from('#hero-card', { y: 60, opacity: 0, scale: 0.9, duration: 0.6, ease: "power3.out" }, 0.3);
+
+        // 2. Word-level text highlight sync
+        timing.forEach(item => {
+          const el = document.querySelector(`[data-word="${item.word}"]`);
+          if (el) {
+            masterTimeline.to(el, { color: "#6366f1", scale: 1.1, duration: 0.08 }, item.start);
+            masterTimeline.to(el, { color: "#ffffff", scale: 1.0, duration: 0.12 }, item.end);
+          }
+        });
+      } catch (err) {
+        console.warn("timing.json not found, running standalone preview timeline");
+        masterTimeline.to('#scene-1', { opacity: 1, duration: 0.2 }, 0);
+        masterTimeline.from('#badge', { y: -20, opacity: 0, duration: 0.4, ease: "back.out(1.7)" }, 0.1);
+        masterTimeline.from('#title .word', { y: 20, opacity: 0, stagger: 0.15, duration: 0.5 }, 0.3);
+        masterTimeline.from('#hero-card', { y: 60, opacity: 0, scale: 0.9, duration: 0.6, ease: "power3.out" }, 0.8);
+      }
+
+      // Hook for HyperFrames headless driver
+      window.seekTo = function(seconds) {
+        masterTimeline.seek(seconds);
+      };
+
+      window.__ANIMATION_READY__ = true;
+    }
+
+    window.addEventListener('DOMContentLoaded', setupAnimation);
+  </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MotionGraphicsScript",
+  "type": "object",
+  "required": ["title", "archetype", "targetDuration", "bpm", "scenes"],
+  "properties": {
+    "title": { "type": "string" },
+    "archetype": {
+      "type": "string",
+      "enum": ["product-launch", "explainer-cartoon", "shortform-viral", "proposal-video", "dynamic-presentation"]
+    },
+    "targetDuration": { "type": "number", "description": "Target duration in seconds" },
+    "bpm": { "type": "number", "default": 120 },
+    "aspectRatio": { "type": "string", "enum": ["16:9", "9:16", "1:1"], "default": "16:9" },
+    "scenes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "sceneName", "narration", "onScreenText", "visualIdea"],
+        "properties": {
+          "id": { "type": "integer" },
+          "sceneName": { "type": "string" },
+          "narration": { "type": "string", "description": "Spoken line sent to TTS" },
+          "onScreenText": { 
+            "type": "array", 
+            "items": { "type": "string" },
+            "description": "Key phrases displayed on canvas"
+          },
+          "visualIdea": { "type": "string", "description": "Layout, camera motion, mockups, SVG elements" },
+          "sfxCue": { "type": "string", "enum": ["pop", "whoosh", "sub", "riser", "none"], "default": "none" }
+        }
+      }
+    }
+  }
+}

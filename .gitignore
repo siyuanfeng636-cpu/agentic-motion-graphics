@@ -1,0 +1,9 @@
+node_modules/
+dist/
+snapshots/
+*.mp4
+*.wav
+*.mp3
+*.log
+__pycache__/
+.DS_Store

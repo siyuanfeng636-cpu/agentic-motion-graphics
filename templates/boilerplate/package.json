@@ -1,0 +1,15 @@
+{
+  "name": "agentic-motion-graphics-boilerplate",
+  "version": "1.0.0",
+  "description": "Boilerplate project for HyperFrames + GSAP motion graphics rendering",
+  "scripts": {
+    "lint": "hyperframes lint",
+    "preview": "hyperframes preview",
+    "snapshot": "hyperframes snapshot --time 1.0,2.5,4.0 --output ./snapshots",
+    "render": "hyperframes render"
+  },
+  "dependencies": {
+    "gsap": "^3.12.5",
+    "hyperframes": "^0.8.71"
+  }
+}

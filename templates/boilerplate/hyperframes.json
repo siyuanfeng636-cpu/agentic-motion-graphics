@@ -1,0 +1,11 @@
+{
+  "$schema": "https://hyperframes.dev/schema/v1.json",
+  "entry": "index.html",
+  "output": "dist/output.mp4",
+  "width": 1920,
+  "height": 1080,
+  "fps": 30,
+  "duration": 5.0,
+  "concurrency": 4,
+  "backgroundColor": "#0b0f19"
+}
